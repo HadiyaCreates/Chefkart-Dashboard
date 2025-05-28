@@ -19,16 +19,19 @@ function Crousel() {
       fetchCarouselData();
    }, []);
 
-   const fetchCarouselData = async () => {
-      try {
-         const response = await axios.get("http://localhost:8000/crousel/get");
-         const data = response.data;
-         setCarouselData(Array.isArray(data) ? data : []);
-      } catch (err) {
-         console.error("Failed to fetch carousel data", err);
-         setCarouselData([]);
-      }
-   };
+
+const fetchCarouselData = async () => {
+   try {
+      const response = await axios.get("http://localhost:8000/crousel/get");
+      const data = response.data;
+
+      // Fix: Use the correct nested data
+      setCarouselData(Array.isArray(data.data) ? data.data : []);
+   } catch (err) {
+      console.error("Failed to fetch carousel data", err);
+      setCarouselData([]);
+   }
+};
 
    const handleDelete = async (id) => {
       try {

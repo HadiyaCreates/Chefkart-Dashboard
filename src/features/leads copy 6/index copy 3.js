@@ -7,7 +7,7 @@ function Gallery() {
    const [formData, setFormData] = useState({
       name: "",
       content: "",
-      galleryImages: [],
+      Galleryimage: [],
    });
 
    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -29,7 +29,7 @@ function Gallery() {
 
    const handleDelete = async (blogId) => {
       try {
-         await axios.delete("http://localhost:8000/gallery/delete");
+         await axios.delete(`http://localhost:8000/gallery/deleteAll`);
          setBlogData(blogData.filter((blog) => blog._id !== blogId));
       } catch (err) {
          console.error("Failed to delete blog post", err);
@@ -41,7 +41,7 @@ function Gallery() {
          if (isEditMode) {
             await axios.put(`http://localhost:8000/gallery/update/${editId}`, formData);
          } else {
-            await axios.post("http://localhost:8000/gallery//createGallery", formData);
+            await axios.post("http://localhost:8000/gallery/add", formData);
          }
          setIsCreateModalOpen(false);
          resetFormData();
@@ -52,7 +52,7 @@ function Gallery() {
    };
 
    const resetFormData = () => {
-      setFormData({ name: "", content: "", galleryImages: [] });
+      setFormData({ name: "", content: "", Galleryimage: [] });
       setIsEditMode(false);
       setEditId(null);
    };
@@ -66,7 +66,7 @@ function Gallery() {
       setFormData({
          name: blog.name,
          content: blog.content,
-         galleryImages: blog.galleryImages || [],
+         Galleryimage: blog.Galleryimage|| [],
       });
       setEditId(blog._id);
       setIsEditMode(true);
@@ -101,7 +101,7 @@ function Gallery() {
 
       setFormData((prev) => ({
          ...prev,
-         galleryImages: [...prev.galleryImages, ...uploadedUrls],
+         Galleryimage: [...prev.Galleryimage, ...uploadedUrls],
       }));
    };
 
@@ -123,9 +123,9 @@ function Gallery() {
                      key={blog._id}
                      className="border rounded-lg p-5 shadow-lg bg-white hover:shadow-xl transition-all"
                   >
-                     {blog.galleryImages?.length > 0 && (
+                     {blog.Galleryimage?.length > 0 && (
                         <img
-                           src={blog.galleryImages[0]}
+                           src={blog.Galleryimage[0]}
                            alt={blog.title}
                            className="w-full h-40 object-cover rounded-md"
                         />
@@ -185,7 +185,7 @@ function Gallery() {
                   />
 
                   <div className="flex gap-2 mt-2 overflow-x-auto">
-                     {formData.galleryImages.map((img, idx) => (
+                     {formData.Galleryimage.map((img, idx) => (
                         <img
                            key={idx}
                            src={img}

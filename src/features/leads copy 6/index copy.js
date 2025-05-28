@@ -12,11 +12,9 @@ function Blog() {
    });
 
    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-   // editing mode state
    const [isEditMode, setIsEditMode] = useState(false);
-   // id of the blog post being edited
-   // this will be used to identify which blog post to update
    const [editId, setEditId] = useState(null);
+   const [loading, setLoading] = useState(false);
 
    useEffect(() => {
       fetchBlogData();
@@ -28,6 +26,7 @@ function Blog() {
          setBlogData(Array.isArray(response.data) ? response.data : [response.data]);
       } catch (err) {
          console.error("Failed to fetch blog data", err);
+         alert("Failed to load blogs. Please try again.");
       }
    };
 
@@ -37,21 +36,32 @@ function Blog() {
          setBlogData(blogData.filter((blog) => blog._id !== blogId));
       } catch (err) {
          console.error("Failed to delete blog post", err);
+         alert("Delete failed. Try again.");
       }
    };
 
    const handleCreateOrUpdate = async () => {
+      if (!formData.title || !formData.content || !formData.category || !formData.image) {
+         alert("Please fill in all fields.");
+         return;
+      }
+
+      setLoading(true);
       try {
          if (isEditMode) {
             await axios.put(`http://localhost:8000/blog/update/${editId}`, formData);
          } else {
             await axios.post("http://localhost:8000/blog/create", formData);
          }
+
          setIsCreateModalOpen(false);
          resetFormData();
          fetchBlogData();
       } catch (err) {
          console.error("Failed to submit blog post", err);
+         alert("Submission failed. Try again.");
+      } finally {
+         setLoading(false);
       }
    };
 
@@ -98,6 +108,7 @@ function Blog() {
          setFormData((prev) => ({ ...prev, image: response.data.secure_url }));
       } catch (err) {
          console.error("Image upload failed", err);
+         alert("Image upload failed. Try again.");
       }
    };
 
@@ -125,8 +136,12 @@ function Blog() {
                         className="w-full h-40 object-cover rounded-md"
                      />
                      <h3 className="text-lg font-bold text-gray-800 mt-3">{blog.title}</h3>
-                     <p className="text-sm text-gray-600 mt-2">{blog.content}</p>
-                     <p className="text-sm text-gray-600 mt-2">{blog.category}</p>
+                     <p className="text-sm text-gray-600 mt-2">
+                        {blog.content.length > 100
+                           ? blog.content.slice(0, 100) + "..."
+                           : blog.content}
+                     </p>
+                     <p className="text-sm text-gray-500 mt-1 italic">{blog.category}</p>
 
                      <div className="mt-4 flex justify-between">
                         <button
@@ -148,8 +163,17 @@ function Blog() {
          </TitleCard>
 
          {isCreateModalOpen && (
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-               <div className="bg-white p-6 rounded-lg w-96 shadow-xl">
+            <div
+               className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+               onClick={() => {
+                  setIsCreateModalOpen(false);
+                  resetFormData();
+               }}
+            >
+               <div
+                  className="bg-white p-6 rounded-lg w-96 shadow-xl"
+                  onClick={(e) => e.stopPropagation()}
+               >
                   <h3 className="text-lg font-bold text-gray-800 mb-2">
                      {isEditMode ? "Edit Blog Post" : "Add New Blog Post"}
                   </h3>
@@ -198,9 +222,12 @@ function Blog() {
                   <div className="mt-4 flex justify-between">
                      <button
                         onClick={handleCreateOrUpdate}
-                        className="px-4 py-2 bg-green-500 text-white rounded-md"
+                        disabled={loading}
+                        className={`px-4 py-2 rounded-md text-white ${
+                           loading ? "bg-gray-400" : "bg-green-500"
+                        }`}
                      >
-                        {isEditMode ? "Update" : "Save"}
+                        {loading ? "Saving..." : isEditMode ? "Update" : "Save"}
                      </button>
                      <button
                         onClick={() => {
