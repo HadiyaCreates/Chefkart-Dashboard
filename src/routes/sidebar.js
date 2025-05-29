@@ -78,13 +78,16 @@ const routes = [
 
 
   
-  {
-    path: '/app/crousel',
+  // {
+  //   path: '/app/crousel',
   
-    name: 'View-Booking',
-  },
+  //   name: 'View-Booking',
+  // },
  
-
+{
+    path: '/app/booking',
+    name: 'View-Booking',
+},
   
   
 

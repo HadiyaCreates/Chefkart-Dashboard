@@ -15,7 +15,8 @@ const Chef=lazy(()=>import('../pages/protected/ChefDetails'))
 const Investor=lazy(()=>import('../pages/protected/Investor'))
 const Homepage=lazy(()=>import('../pages/protected/Home'))
 const ImagGallery=lazy(()=>import('../pages/protected/ImageGallery'))
-
+const User=lazy(()=>import('../pages/protected/User')) ;
+const Booking=lazy(()=>import('../pages/protected/Booking'))
 const routes = [
   { // the url
   component: Dashboard, // view rendered
@@ -62,9 +63,13 @@ const routes = [
   },
   
 
+  // {
+  //   path: '/User',
+  //   component: Crousel,
+  // },
   {
     path: '/User',
-    component: Crousel,
+    component: User,
   },
   {
     path: '/Service',
@@ -77,7 +82,7 @@ const routes = [
   },
   {
     path: '/booking',
-    component: Crousel,
+    component: Booking
   },
  
   
