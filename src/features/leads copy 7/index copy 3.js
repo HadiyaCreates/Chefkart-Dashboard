@@ -21,7 +21,7 @@ function InvestorList() {
 
    const fetchBlogData = async () => {
       try {
-         const response = await axios.get("http://localhost:8000/investor/getinvestor");
+         const response = await axios.get("https://chefkart-backend-1.onrender.com/investor/getinvestor");
          const investors = response.data
          console.log(investors);
          setBlogData(Array.isArray(investors) ? investors : []);
@@ -34,9 +34,9 @@ function InvestorList() {
    const handleCreateOrUpdate = async () => {
       try {
          if (isEditMode) {
-            await axios.put(`http://localhost:8000/testimonial/update/${editId}`, formData);
+            await axios.put(`https://chefkart-backend-1.onrender.com/testimonial/update/${editId}`, formData);
          } else {
-            await axios.post("http://localhost:8000/investor/createInvestor", formData);
+            await axios.post("https://chefkart-backend-1.onrender.com/investor/createInvestor", formData);
          }
          setIsCreateModalOpen(false);
          resetFormData();

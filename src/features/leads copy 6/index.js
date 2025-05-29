@@ -18,6 +18,7 @@ function AboutList() {
    const fetchAboutData = async () => {
       try {
          const response = await axios.get("https://tesodtechnologyfinal.onrender.com/about/getAbout");
+         // const response = await axios.get("https://chefkart-backend-1.onrender.com/about/getAbout");
          setAboutData(Array.isArray(response.data) ? response.data : [response.data]);
       } catch (err) {
          console.error("Failed to fetch about data", err);
@@ -27,6 +28,7 @@ function AboutList() {
    const handleDelete = async (aboutId) => {
       try {
          await axios.delete(`https://tesodtechnologyfinal.onrender.com/about/${aboutId}`);
+         // await axios.delete(`https://chefkart-backend-1.onrender.com/about/${aboutId}`);
          setAboutData(aboutData.filter((about) => about._id !== aboutId));
       } catch (err) {
          console.error("Failed to delete about data", err);
@@ -36,6 +38,7 @@ function AboutList() {
    const handleCreate = async () => {
       try {
          await axios.post("https://tesodtechnologyfinal.onrender.com/about/createAbout", formData);
+         // await axios.post("https://chefkart-backend-1.onrender.com/about/createAbout", formData);
          setIsCreateModalOpen(false);
          resetFormData();
          fetchAboutData();

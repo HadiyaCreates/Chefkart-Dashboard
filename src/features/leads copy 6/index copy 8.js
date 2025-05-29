@@ -24,7 +24,8 @@ function Homepage() {
 
    const fetchBlogData = async () => {
       try {
-         const response = await axios.get("http://localhost:8000/home/getall");
+         // const response = await axios.get("http://localhost:8000/home/getall");
+         const response = await axios.get(`${process.env.REACT_APP_API_URL}/home/getall`);
          setBlogData(Array.isArray(response.data) ? response.data : [response.data]);
       } catch (err) {
          console.error("Failed to fetch blog data", err);
@@ -33,7 +34,8 @@ function Homepage() {
 
    const handleDelete = async (blogId) => {
       try {
-         await axios.delete(`http://localhost:8000/blog/delete/${blogId}`);
+         // await axios.delete(`http://localhost:8000/blog/delete/${blogId}`);
+         await axios.delete(`${process.env.REACT_APP_API_URL}/blog/delete/${blogId}`);
          setBlogData(blogData.filter((blog) => blog._id !== blogId));
       } catch (err) {
          console.error("Failed to delete blog post", err);
@@ -43,9 +45,11 @@ function Homepage() {
    const handleCreateOrUpdate = async () => {
       try {
          if (isEditMode) {
-            await axios.put(`http://localhost:8000/blog/update/${editId}`, formData);
+            // await axios.put(`http://localhost:8000/blog/update/${editId}`, formData);
+            await axios.put(`${process.env.REACT_APP_API_URL}/home/update/${editId}`, formData);
          } else {
-            await axios.post("http://localhost:8000/home/createHomePage", formData);
+            // await axios.post("http://localhost:8000/home/createHomePage", formData);
+            await axios.post(`${process.env.REACT_APP_API_URL}/home/createHomePage`, formData);
          }
          setIsCreateModalOpen(false);
          resetFormData();

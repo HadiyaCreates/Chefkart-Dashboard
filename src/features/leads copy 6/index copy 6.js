@@ -13,7 +13,8 @@ function ChefDetails() {
 
    const fetchChefs = async () => {
       try {
-         const res = await axios.get("http://localhost:8000/chef/get");
+         // const res = await axios.get("http://localhost:8000/chef/get");
+         const res = await axios.get(`${process.env.REACT_APP_API_URL}/chef/get`);
          setChefs(res.data.data || []);
       } catch (err) {
          console.error("Failed to fetch chef data", err);

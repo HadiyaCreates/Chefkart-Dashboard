@@ -16,7 +16,7 @@ function ServiceList() {
 
    const fetchServices = async () => {
       try {
-         const response = await axios.get("http://localhost:8000/ser/get");
+         const response = await axios.get("https://chefkart-backend-1.onrender.com/ser/get");
          setServices(Array.isArray(response.data) ? response.data : [response.data]);
       } catch (err) {
          console.error("Failed to fetch services", err);
@@ -25,7 +25,7 @@ function ServiceList() {
 
    const handleDelete = async (serviceId) => {
       try {
-         await axios.delete(`http://localhost:8000/ser/delete/${serviceId}`);
+         await axios.delete(`https://chefkart-backend-1.onrender.com/ser/delete/${serviceId}`);
          setServices(services.filter((service) => service._id !== serviceId));
       } catch (err) {
          console.error("Failed to delete service", err);
@@ -34,7 +34,7 @@ function ServiceList() {
 
    const handleCreate = async (values) => {
       try {
-         await axios.post("http://localhost:8000/ser/createService", values);
+         await axios.post("https://chefkart-backend-1.onrender.com/ser/createService", values);
          setIsCreateModalOpen(false);
          fetchServices();
       } catch (err) {

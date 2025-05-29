@@ -23,7 +23,8 @@ function JoinChef() {
 
    const fetchBlogData = async () => {
       try {
-         const response = await axios.get("http://localhost:8000/join/get");
+         // const response = await axios.get("http://localhost:8000/join/get");
+         const response = await axios.get(`${process.env.REACT_APP_API_URL}/join/get`);
          setBlogData(Array.isArray(response.data) ? response.data : [response.data]);
       } catch (err) {
          console.error("Failed to fetch blog data", err);
@@ -32,7 +33,8 @@ function JoinChef() {
 
    const handleDelete = async (blogId) => {
       try {
-         await axios.delete(`http://localhost:8000/join/delete/${blogId}`);
+         // await axios.delete(`http://localhost:8000/join/delete/${blogId}`);
+         await axios.delete(`${process.env.REACT_APP_API_URL}/join/delete/${blogId}`);
          setBlogData(blogData.filter((blog) => blog._id !== blogId));
       } catch (err) {
          console.error("Failed to delete blog post", err);
@@ -42,9 +44,11 @@ function JoinChef() {
    const handleCreateOrUpdate = async () => {
       try {
          if (isEditMode) {
-            await axios.put(`http://localhost:8000/join/update/${editId}`, formData);
+            // await axios.put(`http://localhost:8000/join/update/${editId}`, formData);
+            await axios.put(`${process.env.REACT_APP_API_URL}/join/update/${editId}`, formData);
          } else {
-            await axios.post("http://localhost:8000/join/createJoin", formData);
+            // await axios.post("http://localhost:8000/join/createJoin", formData);
+            await axios.post(`${process.env.REACT_APP_API_URL}/join/createJoin`, formData);
          }
          setIsCreateModalOpen(false);
          resetFormData();

@@ -4,7 +4,7 @@ const Booking = () => {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/Booking/get") // Adjust endpoint as per your backend
+    fetch("https://chefkart-backend-1.onrender.com/Booking/get") // Adjust endpoint as per your backend
       .then((res) => res.json())
       .then((data) => setBookings(data.data || []))
       .catch((err) => console.error("Failed to fetch bookings", err));

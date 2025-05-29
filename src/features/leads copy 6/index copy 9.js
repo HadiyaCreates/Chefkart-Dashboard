@@ -14,7 +14,8 @@ function ImageGallery() {
 
    const fetchImages = async () => {
       try {
-         const res = await axios.get("http://localhost:8000/foodGall/getall");
+         // const res = await axios.get("http://localhost:8000/foodGall/getall");
+         const res = await axios.get(`${process.env.REACT_APP_API_URL}/foodGall/getall`);
          setImages(res.data || []);
       } catch (err) {
          console.error("Failed to fetch images", err);
@@ -42,10 +43,12 @@ function ImageGallery() {
          const imageUrl = cloudinaryRes.data.secure_url;
 
          // 2. Send the image URL to your backend
-         await axios.post("http://localhost:8000/foodGall/create", {
+         // await axios.post("http://localhost:8000/foodGall/create", {
+         //    image: imageUrl,
+         // });
+         await axios.post(`${process.env.REACT_APP_API_URL}/foodGall/create`, {
             image: imageUrl,
-         });
-
+         });            
          setSelectedImage(null);
          fetchImages(); // Refresh the list
       } catch (err) {

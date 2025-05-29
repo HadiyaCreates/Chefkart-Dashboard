@@ -20,7 +20,8 @@ function Testimonial() {
 
    const fetchBlogData = async () => {
       try {
-         const response = await axios.get("http://localhost:8000/testimonial/get");
+         // const response = await axios.get("http://localhost:8000/testimonial/get");
+         const response = await axios.get(`${process.env.REACT_APP_API_URL}/testimonial/get`);
          const testimonials = response.data.data;
          setBlogData(Array.isArray(testimonials) ? testimonials : []);
       } catch (err) {
@@ -30,7 +31,8 @@ function Testimonial() {
 
    const handleDelete = async (id) => {
       try {
-         await axios.delete(`http://localhost:8000/testimonial/delete/${id}`);
+         // await axios.delete(`http://localhost:8000/testimonial/delete/${id}`);
+         await axios.delete(`${process.env.REACT_APP_API_URL}/testimonial/delete/${id}`);
          setBlogData((prev) => prev.filter((item) => item._id !== id));
       } catch (err) {
          console.error("Failed to delete testimonial", err);
@@ -40,9 +42,11 @@ function Testimonial() {
    const handleCreateOrUpdate = async () => {
       try {
          if (isEditMode) {
-            await axios.put(`http://localhost:8000/testimonial/update/${editId}`, formData);
+            // await axios.put(`http://localhost:8000/testimonial/update/${editId}`, formData);
+            await axios.put(`${process.env.REACT_APP_API_URL}/testimonial/update/${editId}`, formData);
          } else {
-            await axios.post("http://localhost:8000/testimonial/createTestimonial", formData);
+            // await axios.post("http://localhost:8000/testimonial/createTestimonial", formData);
+            await axios.post(`${process.env.REACT_APP_API_URL}/testimonial/createTestimonial`, formData);
          }
          setIsCreateModalOpen(false);
          resetFormData();

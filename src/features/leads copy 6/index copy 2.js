@@ -11,7 +11,8 @@ function InternshipForm() {
 
    const fetchInternshipData = async () => {
       try {
-         const response = await axios.get("http://localhost:8000/internship/internships");
+         // const response = await axios.get("http://localhost:8000/internship/internships");
+         const response = await axios.get(`${process.env.REACT_APP_API_URL}/internship/internships`);
          setInternshipData(Array.isArray(response.data) ? response.data : [response.data]);
       } catch (err) {
          console.error("Failed to fetch internship applications", err);

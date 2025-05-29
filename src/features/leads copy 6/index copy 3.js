@@ -20,7 +20,8 @@ function Gallery() {
 
    const fetchBlogData = async () => {
       try {
-         const response = await axios.get("http://localhost:8000/gallery/get");
+         // const response = await axios.get("http://localhost:8000/gallery/get");
+         const response = await axios.get(`${process.env.REACT_APP_API_URL}/gallery/get`);
          setBlogData(Array.isArray(response.data) ? response.data : [response.data]);
       } catch (err) {
          console.error("Failed to fetch blog data", err);
@@ -29,7 +30,8 @@ function Gallery() {
 
    const handleDelete = async (blogId) => {
       try {
-         await axios.delete(`http://localhost:8000/gallery/deleteAll`);
+         // await axios.delete(`http://localhost:8000/gallery/deleteAll`);
+         await axios.delete(`${process.env.REACT_APP_API_URL}/gallery/deleteAll/${blogId}`);
          setBlogData(blogData.filter((blog) => blog._id !== blogId));
       } catch (err) {
          console.error("Failed to delete blog post", err);
@@ -39,9 +41,11 @@ function Gallery() {
    const handleCreateOrUpdate = async () => {
       try {
          if (isEditMode) {
-            await axios.put(`http://localhost:8000/gallery/update/${editId}`, formData);
+            // await axios.put(`http://localhost:8000/gallery/update/${editId}`, formData);
+            await axios.put(`${process.env.REACT_APP_API_URL}/gallery/update/${editId}`, formData);
          } else {
-            await axios.post("http://localhost:8000/gallery/add", formData);
+            // await axios.post("http://localhost:8000/gallery/add", formData);
+            await axios.post(`${process.env.REACT_APP_API_URL}/gallery/add`, formData);
          }
          setIsCreateModalOpen(false);
          resetFormData();

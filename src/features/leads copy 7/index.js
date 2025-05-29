@@ -17,7 +17,7 @@ function ServiceList() {
 
    const fetchServices = async () => {
       try {
-         const response = await axios.get("http://localhost:8000/product/Product");
+         const response = await axios.get("https://chefkart-backend-1.onrender.com/product/Product");
          setServices(Array.isArray(response.data) ? response.data : [response.data]);
       } catch (err) {
          console.error("Failed to fetch services", err);
@@ -26,7 +26,7 @@ function ServiceList() {
 
    const handleDelete = async (serviceId) => {
       try {
-         await axios.delete(`http://localhost:8000/product/${serviceId}`);
+         await axios.delete(`https://chefkart-backend-1.onrender.com/product/${serviceId}`);
          setServices(services.filter((service) => service._id !== serviceId));
       } catch (err) {
          console.error("Failed to delete service", err);
@@ -53,7 +53,7 @@ function ServiceList() {
          updateData.append("image", formData.image);
          if (formData.file instanceof File) updateData.append("file", formData.file);
 
-         await axios.put(`http://localhost:8000/product/${selectedService._id}`, updateData, {
+         await axios.put(`https://chefkart-backend-1.onrender.com/product/${selectedService._id}`, updateData, {
             headers: { "Content-Type": "multipart/form-data" },
          });
 
@@ -73,7 +73,7 @@ function ServiceList() {
          createData.append("image", formData.image);
          if (formData.file instanceof File) createData.append("file", formData.file);
 
-         await axios.post("http://localhost:8000/product/create", createData, {
+         await axios.post("https://chefkart-backend-1.onrender.com/product/create", createData, {
             headers: { "Content-Type": "multipart/form-data" },
          });
 
@@ -126,7 +126,7 @@ function ServiceList() {
 
    const downloadHTML = async (id, name) => {
       try {
-         const response = await axios.get(`http://localhost:8000/product/download/${id}`, {
+         const response = await axios.get(`https://chefkart-backend-1.onrender.com/product/download/${id}`, {
             responseType: 'blob'
          });
 
@@ -191,7 +191,7 @@ function ServiceList() {
                         </button>
                         <button
                            onClick={() => {
-                              window.open(`http://localhost:8000/product/download/${service._id}`, "_blank");
+                              window.open(`https://chefkart-backend-1.onrender.com/product/download/${service._id}`, "_blank");
                            }}
                            className="text-green-600 hover:underline"
                         >

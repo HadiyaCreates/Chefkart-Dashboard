@@ -22,7 +22,8 @@ function Crousel() {
 
 const fetchCarouselData = async () => {
    try {
-      const response = await axios.get("http://localhost:8000/crousel/get");
+      // const response = await axios.get("http://localhost:8000/crousel/get");
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/crousel/get`);
       const data = response.data;
 
       // Fix: Use the correct nested data
@@ -35,7 +36,8 @@ const fetchCarouselData = async () => {
 
    const handleDelete = async (id) => {
       try {
-         await axios.delete(`http://localhost:8000/crousel/delete/${id}`);
+         // await axios.delete(`http://localhost:8000/crousel/delete/${id}`);
+         await axios.delete(`${process.env.REACT_APP_API_URL}/crousel/delete/${id}`);
          setCarouselData((prev) => prev.filter((item) => item._id !== id));
       } catch (err) {
          console.error("Failed to delete carousel item", err);
@@ -45,9 +47,11 @@ const fetchCarouselData = async () => {
    const handleCreateOrUpdate = async () => {
       try {
          if (isEditMode) {
-            await axios.put(`http://localhost:8000/crousel/update/${editId}`, formData);
+            // await axios.put(`http://localhost:8000/crousel/update/${editId}`, formData);
+            await axios.put(`${process.env.REACT_APP_API_URL}/crousel/update/${editId}`, formData);
          } else {
-            await axios.post("http://localhost:8000/crousel/createCrousel", formData);
+            // await axios.post("http://localhost:8000/crousel/createCrousel", formData);
+            await axios.post(`${process.env.REACT_APP_API_URL}/crousel/createCrousel`, formData);
          }
          setIsCreateModalOpen(false);
          resetFormData();

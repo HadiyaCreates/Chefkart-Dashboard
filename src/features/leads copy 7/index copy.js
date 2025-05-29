@@ -11,7 +11,7 @@ function ContactList() {
 
    const fetchContacts = async () => {
       try {
-         const response = await axios.get("http://localhost:8000/contact");
+         const response = await axios.get("https://chefkart-backend-1.onrender.com/contact");
          setContacts(Array.isArray(response.data) ? response.data : [response.data]);
       } catch (err) {
          console.error("Failed to fetch contacts", err);

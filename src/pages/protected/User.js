@@ -5,7 +5,7 @@ const User = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/auth/all")
+    fetch("https://chefkart-backend-1.onrender.com/auth/all")
       .then((res) => res.json())
       .then((data) => setUsers(data.data || []))
       .catch((err) => console.error("Failed to fetch users", err));
